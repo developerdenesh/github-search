@@ -33,6 +33,11 @@
         <input id="query" name="username" type="text" autocomplete="off" placeholder="Query"
             style="text-align: center;">
     </h2>
+    <h3 class="centering" style="color: red; display: none">
+        Unable to perform query
+    </h3>
+    <ul style="color: white">
+    </ul>
 </body>
 
 <script>
@@ -55,7 +60,19 @@
             xhttp.onreadystatechange = () => {
                 if (xhttp.readyState == 4 && xhttp.status == 200) {
                     resp = xhttp.responseText;
-                    console.log(resp)
+                    const remove_first_bracket = resp.slice(1)
+                    const remove_last_bracket = remove_first_bracket.slice(0, -1)
+                    const urls = remove_last_bracket.split(",")
+
+                    document.querySelector('ul').innerHTML = "";
+                    urls.map(element => {
+                        const node = document.createElement('li');
+                        node.appendChild(document.createTextNode(element));
+                        document.querySelector('ul').appendChild(node);
+                    })
+
+                } else if (xhttp.readyState == 4 && xhttp.status == 503) {
+                    document.getElementById('error-code').style.display = "";
                 }
             }
 
