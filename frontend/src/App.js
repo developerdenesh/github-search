@@ -1,5 +1,5 @@
 import './App.css';
-import Input from './components/input';
+import Searchinput from './components/input';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
         <p>
           Github Search
         </p>
-        <Input />
+        <Searchinput />
       </header>
     </div>
   );
