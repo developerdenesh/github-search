@@ -38,6 +38,27 @@
     </h3>
     <ul style="color: white">
     </ul>
+
+    <input type="radio" id="users" name="type_of_search" value="Users" checked="true">
+    <label for="users" style="color: white;">Users</label><br>
+
+    <input type="radio" id="topics" name="type_of_search" value="topics" >
+    <label for="topics" style="color: white;">Topics</label><br>
+
+    <input type="radio" id="repositories" name="type_of_search" value="repositories" >
+    <label for="repositories" style="color: white;">Repositories</label><br>
+    
+    <input type="radio" id="labels" name="type_of_search" value="labels" >
+    <label for="labels" style="color: white;">Labels</label><br>
+
+    <input type="radio" id="issues" name="type_of_search" value="issues" >
+    <label for="issues" style="color: white;">Issues & Pull Requests</label><br>
+    
+    <input type="radio" id="code" name="type_of_search" value="code">
+    <label for="code" style="color: white;">Code</label><br>
+
+    <input type="radio" id="commits" name="type_of_search" value="commits">
+    <label for="commits" style="color: white;">Commits</label>
 </body>
 
 <script>
@@ -51,6 +72,12 @@
         }
 
         if (e.key === 'Enter') {
+            let type_of_search;
+            document.querySelectorAll("input").forEach(element => {
+                if (element.checked) {
+                    type_of_search = element.id
+                }
+            })
             // code for enter
             xhttp.abort();
             xhttp.open("POST", "search", true);
@@ -75,7 +102,8 @@
             }
 
             const data = {
-                "query": document.getElementById('query').value
+                "query": document.getElementById('query').value,
+                "type": type_of_search
             }
             xhttp.send(JSON.stringify(data));
         }

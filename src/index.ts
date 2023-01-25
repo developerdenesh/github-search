@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 // This is required to make forms work
 app.use(express.json())
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5000
 
 // ====================
 // These are the views
@@ -28,11 +28,12 @@ app.get('/', (req: Request, res: Response) => {
 // ====================
 app.post('/search', (req: Request, res: Response) => {
     const body: string = req.body.query;
+    const type: string = req.body.type;
     console.log(body)
 
     let result: string[] = [];
 
-    axios.get<any>(`https://api.github.com/search/repositories?q=${body}`,
+    axios.get<any>(`https://api.github.com/search/${type}?q=${body}`,
         {
             headers: {
                 Accept: 'application/vnd.github.text-match+json',
@@ -42,7 +43,7 @@ app.post('/search', (req: Request, res: Response) => {
         console.log(response.status)
         const data: Array<any> = response.data.items;
         for (let i = 0; i < data.length; i++) {
-            console.log(data[i].html_url)
+            console.log(data[i])
             result.push(data[i].html_url)
         }
         res.send(result).status(200);
