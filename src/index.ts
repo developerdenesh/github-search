@@ -13,7 +13,6 @@ app.use(express.json())
 
 const PORT = process.env.PORT || 3000
 
-
 // ====================
 // These are the views
 // ====================
@@ -49,6 +48,7 @@ app.post('/search', (req: Request, res: Response) => {
         res.send(result).status(200);
     }).catch((error) => {
         console.error("Error with the url")
+        console.error(error)
         res.send(error).status(503)
     })
     

@@ -41,22 +41,20 @@
 </body>
 
 <script>
+    const xhttp = new XMLHttpRequest();
+
     document.querySelector('#query').addEventListener('keyup', function (e) {
         if (document.getElementById('query').value === "") {
             // The search box is empty, simply return
+            document.querySelector('ul').innerHTML = "";
             return;
         }
 
         if (e.key === 'Enter') {
             // code for enter
-            const xhttp = new XMLHttpRequest();
+            xhttp.abort();
             xhttp.open("POST", "search", true);
             xhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-
-            // csrf means Cross Site Request Forgery
-            // const csrftoken = getCookie('csrftoken');
-            // xhttp.setRequestHeader("X-CSRFToken", csrftoken);
-
             xhttp.onreadystatechange = () => {
                 if (xhttp.readyState == 4 && xhttp.status == 200) {
                     resp = xhttp.responseText;
