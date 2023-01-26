@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import path from 'path'
 import axios from 'axios';
+import cors from 'cors';
 
 // Using the express backend library
 const app: Express = express();
@@ -10,6 +11,7 @@ app.set('view engine', 'ejs');
 
 // This is required to make forms work
 app.use(express.json())
+app.use(cors())
 
 const PORT = process.env.PORT || 5000
 
@@ -28,31 +30,33 @@ app.get('/', (req: Request, res: Response) => {
 // ====================
 app.post('/search', (req: Request, res: Response) => {
     const body: string = req.body.query;
-    const type: string = req.body.type;
+    const type_search: string = req.body.type;
     console.log(body)
 
     let result: string[] = [];
-
-    axios.get<any>(`https://api.github.com/search/${type}?q=${body}`,
+    axios.get<any>(`https://api.github.com/search/${type_search}?q=${body}`,
         {
             headers: {
                 Accept: 'application/vnd.github.text-match+json',
-            },
-        },
-    ).then((response) => {
+            }
+        }
+    )
+    .then((response) => {
         console.log(response.status)
         const data: Array<any> = response.data.items;
         for (let i = 0; i < data.length; i++) {
             console.log(data[i])
             result.push(data[i].html_url)
         }
+        res.header("Access-Control-Allow-Origin", "*");
         res.send(result).status(200);
-    }).catch((error) => {
+    })
+    .catch((error) => {
         console.error("Error with the url")
         console.error(error)
+        res.header("Access-Control-Allow-Origin", "*");
         res.send(error).status(503)
     })
-    
 });
 
 // ====================
