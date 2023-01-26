@@ -33,7 +33,7 @@ app.post('/search', (req: Request, res: Response) => {
     const type_search: string = req.body.type;
     console.log(body)
 
-    let result: string[] = [];
+    let result: Object[] = [];
     axios.get<any>(`https://api.github.com/search/${type_search}?q=${body}`,
         {
             headers: {
@@ -46,7 +46,21 @@ app.post('/search', (req: Request, res: Response) => {
         const data: Array<any> = response.data.items;
         for (let i = 0; i < data.length; i++) {
             console.log(data[i])
-            result.push(data[i].html_url)
+            
+            let temp_json;
+
+            if (type_search === "topics") {
+                temp_json = {
+                    id: data[i].name,
+                    url: data[i].name
+                }
+            } else {
+                temp_json = {
+                    id: data[i].id,
+                    url: data[i].html_url
+                }
+            }
+            result.push(temp_json)
         }
         res.header("Access-Control-Allow-Origin", "*");
         res.send(result).status(200);
