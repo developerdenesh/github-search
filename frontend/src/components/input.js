@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Input } from "@chakra-ui/react";
+import { Input, ListItem, ListIcon, List } from "@chakra-ui/react";
+import { StarIcon } from '@chakra-ui/icons'
 import axios from "axios";
 
 const Searchinput = () => {
     const [value, setValue] = useState("")
     const [apitimer, setapitimer] = useState(null)
+    const [urllist, setUrllist] = useState([])
 
     useEffect(() => {
         setapitimer(
@@ -33,9 +35,19 @@ const Searchinput = () => {
         })
             .then((res) => {
                 console.log(res.data)
+                res.data.map((element) => {
+                    let temp_json = {
+                        id: element.id,
+                        url: element.url,
+                    }
+                    // Display data on the screen
+                    setUrllist(urllist => [...urllist, temp_json])
+                    return 0;
+                })
+
             })
             .catch((err) => {
-                console.error(err)
+                console.log(err);
             });
     }
 
@@ -50,8 +62,10 @@ const Searchinput = () => {
 
         setapitimer(
             setTimeout(() => {
+                // Clear the text field when a new suggestion is being queried
+                setUrllist([])
                 callApi({ query: event.target.value })
-            }, 2000)
+            }, 1000)
         )
     }
 
@@ -73,7 +87,7 @@ const Searchinput = () => {
         //     (keycode > 95 && keycode < 112)  || // numpad keys
         //     (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
         //     (keycode > 218 && keycode < 223);   // [\]' (in order)
-            
+
         //     if (valid) {
         //         temp_value += event.key
         //     }
@@ -93,6 +107,14 @@ const Searchinput = () => {
                 placeholder="Enter the search query"
                 size='lg'
             />
+            <List>
+                {urllist.map((item) => (
+                    <ListItem key={item.id}>
+                        <ListIcon as={StarIcon} color='green.500' />
+                        {item.url}
+                    </ListItem>
+                ))}
+            </List>
         </>
     )
 }
