@@ -62,10 +62,19 @@ const Searchinput = () => {
             type: keyword
         }
 
+        let url;
+        if (window.location.hostname === 'localhost') {
+            console.log("using the localhost settings")
+            url = "http://localhost:5000/search"
+        } else {
+            url = "https://github-search-service.onrender.com/search"
+        }
+
+
         setDisplayspinner(true)
         axios({
             // Endpoint to send files
-            url: "http://localhost:5000/search",
+            url: url,
             method: "POST",
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
