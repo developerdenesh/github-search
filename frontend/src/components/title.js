@@ -17,7 +17,7 @@ const Title = () => {
 
     return (
         <p>
-            { title }
+            Welcome to { title }
         </p>
     )
 }
