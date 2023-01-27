@@ -11,3 +11,17 @@ describe("test add function", () => {
     expect(summation(2, 3)).toBe(5);
   });
 });
+
+const request = require("supertest");
+const app = require("../../src/index");
+import { Response } from 'express';
+
+describe("Test the root path", () => {
+  test("It should respond to the GET method", (done) => {
+    request(app).get("/")
+      .then((response: Response) => {
+        expect(response.statusCode).toBe(200);
+        done();
+    })
+  });
+});

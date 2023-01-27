@@ -80,3 +80,5 @@ app.listen(PORT, () => {
     // NO SSL at the moment
     console.log(`⚡️⚡️⚡️ Server is running at http://localhost:${PORT}`);
 });
+
+module.exports = app
