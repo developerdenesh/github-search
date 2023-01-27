@@ -7,7 +7,7 @@
     "start": "node build/index.js",
     "build": "tsc",
     "zip": "rm *.zip | zip -r eb.zip . -x 'node_modules/*' -x 'src/' -x '.git/*'",
-    "test": "jest",
+    "test": "concurrently \"jest\" \"CI=true npm test --prefix frontend\"",
     "frontend": "npm start --prefix frontend",
     "backend": "ENVIRONMENT=DEVELOPMENT npx nodemon",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\""
