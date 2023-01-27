@@ -11,5 +11,5 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
   },
-  "exclude": ["src/test", "build", "jest.config.js"],
+  "exclude": ["src/test", "build", "jest.config.js", "frontend"],
 }
