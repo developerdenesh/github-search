@@ -79,6 +79,13 @@ app.post('/search', (req: Request, res: Response) => {
 app.listen(PORT, () => {
     // NO SSL at the moment
     console.log(`⚡️⚡️⚡️ Server is running at http://localhost:${PORT}`);
+
+    // Keep the backend server alive by performing an activity every 5 minutes
+    setInterval(() => {
+        const a: number = 3;
+        const b: number = 5;
+        const sum: number = a + b;
+    }, 300000);
 });
 
 module.exports = app
