@@ -3,6 +3,10 @@ An application that allows users to use the Github API to search for keywords in
 
 Select the keyword and type in the search query into the text input. To perform a search on the default values in the search bar simply use the right arrow to autofill the search bar with the search query prompt
 
+## Instructions
+* A page for users to enter term into a text input for the form to perform an AJAX call to a REST API
+* This REST API which sits on the backend should call the Github Search API and return the result to the frontend
+
 ## Set up 
 ```sh
 # Cloning and installation of modules
